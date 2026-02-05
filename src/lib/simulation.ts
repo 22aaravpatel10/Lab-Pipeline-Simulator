@@ -4,6 +4,7 @@ import type {
   SimulationConfig,
   SimulationResult
 } from "@/lib/types";
+import { isMoveFunction } from "@/lib/types";
 
 interface TaskWindow extends LabWorkflowTask {
   start_sec: number;
@@ -32,7 +33,7 @@ function generateMoveIntervals(
   plates: number,
   staggerSec: number
 ): MoveInterval[] {
-  const moveTasks = timeline.filter((task) => task.type === "MOVE_FUNCTION");
+  const moveTasks = timeline.filter((task) => isMoveFunction(task));
   const intervals: MoveInterval[] = [];
   for (let plate = 0; plate < plates; plate += 1) {
     const offset = plate * staggerSec;
